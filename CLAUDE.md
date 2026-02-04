@@ -61,6 +61,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - Should have asked user preference before choosing tech stack
    - More complex !== better if it doesn't work
 
+10. **NEVER add Claude as a contributor in git commits**
+   - DO NOT include "Co-Authored-By: Claude..." in commit messages
+   - The user is the sole contributor to this project
+   - All commits should be attributed only to the user
+   - Remove any co-authorship lines from commit messages
+
 ### Correct Tech Stack for This Project
 
 **Backend:**
