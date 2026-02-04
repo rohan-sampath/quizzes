@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 100 Companies by Market Cap | Quiz</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏆 Top 100 Companies by Market Cap</h1>
+            <p class="subtitle">Can you name them all?</p>
+            <div class="last-updated" id="lastUpdated">Loading...</div>
+        </header>
+
+        <div class="quiz-stats">
+            <div class="stat-box">
+                <div class="stat-number" id="correctCount">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="totalCount">100</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="percentComplete">0%</div>
+                <div class="stat-label">Complete</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="guessInput"
+                    placeholder="Type a company name or ticker (3+ letters)..."
+                    autocomplete="off"
+                />
+            </div>
+
+            <div class="options-bar">
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="table">📊 Table</button>
+                    <button class="view-btn" data-view="tiles">🎴 Tiles</button>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showLocationToggle">
+                        <span>Show Country & Exchange</span>
+                    </label>
+                </div>
+
+                <button id="giveUpBtn" class="give-up-btn">Give Up & Show All</button>
+            </div>
+        </div>
+
+        <div id="quizContainer" class="quiz-container table-view">
+            <!-- Content will be loaded here via JavaScript -->
+        </div>
+    </div>
+
+    <script src="/js/quiz.js"></script>
+</body>
+</html>

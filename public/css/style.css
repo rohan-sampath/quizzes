@@ -1,0 +1,373 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #f5f7fa;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+.last-updated {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #95a5a6;
+}
+
+.quiz-stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.search-box {
+    margin-bottom: 15px;
+}
+
+#guessInput {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+#guessInput:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.options-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.view-toggle {
+    display: flex;
+    gap: 5px;
+    background: #f5f7fa;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.view-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.view-btn:hover {
+    background: #e0e4e8;
+}
+
+.view-btn.active {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.checkbox-group {
+    flex: 1;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #2c3e50;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.give-up-btn {
+    padding: 10px 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.give-up-btn:hover {
+    background: #c0392b;
+}
+
+.quiz-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* TABLE VIEW */
+.table-view .quiz-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.quiz-table thead {
+    background: #34495e;
+    color: white;
+}
+
+.quiz-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.quiz-table th.text-center {
+    text-align: center;
+}
+
+.quiz-table th.text-right {
+    text-align: right;
+}
+
+.quiz-table tbody tr {
+    border-bottom: 1px solid #ecf0f1;
+    transition: background 0.2s;
+}
+
+.quiz-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.quiz-table tbody tr.revealed {
+    background: #e8f4f8;
+}
+
+.quiz-table td {
+    padding: 15px;
+    font-size: 0.95rem;
+}
+
+.quiz-table td.text-center {
+    text-align: center;
+}
+
+.quiz-table td.text-right {
+    text-align: right;
+}
+
+.company-rank {
+    font-weight: 700;
+    color: #3498db;
+    font-size: 1.1rem;
+}
+
+.company-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.hidden-cell {
+    filter: blur(8px);
+    user-select: none;
+    color: #bdc3c7;
+}
+
+.company-name {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.company-ticker {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.company-marketcap {
+    font-weight: 600;
+    color: #27ae60;
+}
+
+.location-column {
+    display: none;
+}
+
+.show-location .location-column {
+    display: table-cell;
+}
+
+/* TILES VIEW */
+.tiles-view {
+    padding: 20px;
+}
+
+.companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.company-card {
+    background: white;
+    border: 2px solid #ecf0f1;
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.company-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.company-card.revealed {
+    border-color: #3498db;
+    background: #e8f4f8;
+}
+
+.company-card .company-rank {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.company-card .company-logo-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.company-card .company-logo {
+    width: 64px;
+    height: 64px;
+}
+
+.company-card .company-name {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.company-card .company-ticker {
+    margin-bottom: 8px;
+}
+
+.company-card .company-marketcap {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.company-card .company-location {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    display: none;
+}
+
+.show-location .company-card .company-location {
+    display: block;
+}
+
+.company-card.hidden .company-details {
+    filter: blur(8px);
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .quiz-stats {
+        flex-wrap: wrap;
+    }
+
+    .stat-box {
+        padding: 15px 25px;
+    }
+
+    .options-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .view-toggle {
+        justify-content: center;
+    }
+
+    .quiz-table {
+        font-size: 0.85rem;
+    }
+
+    .quiz-table th,
+    .quiz-table td {
+        padding: 10px 8px;
+    }
+
+    .companies-grid {
+        grid-template-columns: 1fr;
+    }
+}

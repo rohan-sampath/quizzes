@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control Panel | Market Cap Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        .status-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .status-value {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .update-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .update-btn:active {
+            transform: translateY(0);
+        }
+
+        .update-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .logs-section {
+            margin-top: 30px;
+        }
+
+        .logs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logs-header h2 {
+            font-size: 1.3rem;
+            color: #2d3748;
+        }
+
+        .refresh-logs-btn {
+            padding: 8px 16px;
+            background: #edf2f7;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .refresh-logs-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .logs-container {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 4px solid #38a169;
+        }
+
+        .message.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border-left: 4px solid #e53e3e;
+        }
+
+        .link-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .link-section a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link-section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <h1>🎛️ Admin Control Panel</h1>
+            <p class="subtitle">Manage quiz data updates</p>
+
+            <div id="message" class="message"></div>
+
+            <div class="status-card">
+                <div class="status-item">
+                    <span class="status-label">Last Updated:</span>
+                    <span class="status-value" id="lastUpdated">Loading...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Total Companies:</span>
+                    <span class="status-value" id="totalCompanies">-</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Data Source:</span>
+                    <span class="status-value" id="dataSource">-</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Next Scheduled Update:</span>
+                    <span class="status-value">Daily at 6:00 PM ET</span>
+                </div>
+            </div>
+
+            <button id="updateBtn" class="update-btn">
+                🔄 Update Now
+            </button>
+
+            <div class="logs-section">
+                <div class="logs-header">
+                    <h2>Update Logs</h2>
+                    <button id="refreshLogsBtn" class="refresh-logs-btn">Refresh</button>
+                </div>
+                <div id="logs" class="logs-container">No logs available yet.</div>
+            </div>
+
+            <div class="link-section">
+                <a href="/">← Back to Quiz</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load current status
+        async function loadStatus() {
+            try {
+                const response = await fetch('/api/quiz-data');
+                const data = await response.json();
+
+                const lastUpdated = new Date(data.lastUpdated);
+                document.getElementById('lastUpdated').textContent =
+                    lastUpdated.toLocaleString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                    });
+
+                document.getElementById('totalCompanies').textContent = data.totalCompanies || '-';
+                document.getElementById('dataSource').textContent = data.source || '-';
+            } catch (error) {
+                document.getElementById('lastUpdated').textContent = 'No data yet';
+                console.error('Failed to load status:', error);
+            }
+        }
+
+        // Load logs
+        async function loadLogs() {
+            try {
+                const response = await fetch('/api/update-status');
+                const data = await response.json();
+
+                if (data.logs) {
+                    document.getElementById('logs').textContent = data.logs;
+                } else {
+                    document.getElementById('logs').textContent = 'No logs available yet.';
+                }
+            } catch (error) {
+                console.error('Failed to load logs:', error);
+            }
+        }
+
+        // Trigger update
+        async function triggerUpdate() {
+            const btn = document.getElementById('updateBtn');
+            const messageDiv = document.getElementById('message');
+
+            btn.disabled = true;
+            btn.textContent = '⏳ Updating...';
+
+            try {
+                const response = await fetch('/api/trigger-update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                messageDiv.className = 'message success show';
+                messageDiv.textContent = '✅ Update started! Refreshing in 5 seconds...';
+
+                // Refresh after 5 seconds
+                setTimeout(() => {
+                    loadStatus();
+                    loadLogs();
+                    messageDiv.classList.remove('show');
+                }, 5000);
+
+            } catch (error) {
+                messageDiv.className = 'message error show';
+                messageDiv.textContent = '❌ Failed to trigger update: ' + error.message;
+            } finally {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = '🔄 Update Now';
+                }, 5000);
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStatus();
+            loadLogs();
+
+            document.getElementById('updateBtn').addEventListener('click', triggerUpdate);
+            document.getElementById('refreshLogsBtn').addEventListener('click', loadLogs);
+
+            // Auto-refresh logs every 30 seconds
+            setInterval(loadLogs, 30000);
+        });
+    </script>
+</body>
+</html>
